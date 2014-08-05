@@ -41,6 +41,14 @@ public class Rules {
 	
 	public static boolean isCheckMove(String move)
 	{
+		if ((move.indexOf('+') == -1))
+			return false;
+		return true;		
+		
+	}
+	
+	public static boolean isPromotion(String move)
+	{
 		if ((move.indexOf('=') == -1))
 			return false;
 		return true;		
