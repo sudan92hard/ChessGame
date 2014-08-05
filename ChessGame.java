@@ -17,6 +17,7 @@ public class ChessGame {
     	Game game = new Game();
     	ArrayList <String> input = game.readInput();
     	System.out.println(game.cb);
+    	//game.isWhite("1234");
     }
     /*public String getColor(String position){ }
     public boolean isValidRookMove(String source, String destination) {}
@@ -35,41 +36,41 @@ class Game
 	public Map <String, String> cb;
 	public Game(){
 	   cb = new LinkedHashMap<String, String>();
-	   cb.put("a1", "R");
-	   cb.put("b1", "N");
-	   cb.put("c1", "B");
-	   cb.put("d1", "K");
-	   cb.put("e1", "Q");
-	   cb.put("f1", "B");
-	   cb.put("g1", "N");
-	   cb.put("h1", "R");
+	   cb.put("a1", "Rw");
+	   cb.put("b1", "Nw");
+	   cb.put("c1", "Bw");
+	   cb.put("d1", "Kw");
+	   cb.put("e1", "Qw");
+	   cb.put("f1", "Bw");
+	   cb.put("g1", "Nw");
+	   cb.put("h1", "Rw");
 	   
-	   cb.put("a2", "P");
-	   cb.put("b2", "P");
-	   cb.put("c2", "P");
-	   cb.put("d2", "P");
-	   cb.put("e2", "P");
-	   cb.put("f2", "P");
-	   cb.put("g2", "P");
-	   cb.put("h2", "P");
+	   cb.put("a2", "Pw");
+	   cb.put("b2", "Pw");
+	   cb.put("c2", "Pw");
+	   cb.put("d2", "Pw");
+	   cb.put("e2", "Pw");
+	   cb.put("f2", "Pw");
+	   cb.put("g2", "Pw");
+	   cb.put("h2", "Pw");
 	   
-	   cb.put("a8", "R");
-	   cb.put("b8", "N");
-	   cb.put("c8", "B");
-	   cb.put("d8", "Q");
-	   cb.put("e8", "K");
-	   cb.put("f8", "B");
-	   cb.put("g8", "N");
-	   cb.put("h8", "R");
+	   cb.put("a8", "Rb");
+	   cb.put("b8", "Nb");
+	   cb.put("c8", "Bb");
+	   cb.put("d8", "Qb");
+	   cb.put("e8", "Kb");
+	   cb.put("f8", "Bb");
+	   cb.put("g8", "Nb");
+	   cb.put("h8", "Rb");
 	   
-	   cb.put("a7", "P");
-	   cb.put("b7", "P");
-	   cb.put("c7", "P");
-	   cb.put("d7", "P");
-	   cb.put("e7", "P");
-	   cb.put("f7", "P");
-	   cb.put("g7", "P");
-	   cb.put("h7", "P");
+	   cb.put("a7", "Pb");
+	   cb.put("b7", "Pb");
+	   cb.put("c7", "Pb");
+	   cb.put("d7", "Pb");
+	   cb.put("e7", "Pb");
+	   cb.put("f7", "Pb");
+	   cb.put("g7", "Pb");
+	   cb.put("h7", "Pb");
 	   
 	   
 	   for(int i = 3; i <= 6; i++)
@@ -82,12 +83,28 @@ class Game
 			   pos = (char) (pos + 1);
 		   }
 	   }
-	   
-	   
    }   
 	  
 	
-      
+    public boolean isWhite(String str)
+    {
+    	if(cb.get(str).charAt(1) == 'w')
+    	{
+    		return true;
+    	}
+    	
+    	return false;
+    }
+    public boolean isBlack(String str)
+    {
+    	if(cb.get(str).charAt(1) == 'b')
+    	{
+    		return true;
+    	}
+    	
+    	return false;
+    }
+    
     public  char getColorOfCell(String destination)
 	{
 		char color;
@@ -185,25 +202,26 @@ class Game
 		
 		return false;
 	}
+	
 	public  boolean isValidBishopMove(String source, String destination) {
     	String files = "abcdefgh";
-    	Integer[] ranks = {0,1,2,3,4,5,6,7,8};
-    
-    	
+    	//Integer[] ranks = {0,1,2,3,4,5,6,7,8};
     	int differenceInFiles = Math.abs(files.indexOf(source.charAt(0)) -  files.indexOf(destination.charAt(0)));
     	int differenceInRanks = Math.abs((int)source.charAt(1) -  (int)destination.charAt(1));
     	
     	
-    	if(differenceInFiles == differenceInRanks){
+    	if(differenceInFiles == differenceInRanks){  
     		return true;
     	}
     	return false;
     	
     }  
+	
 	public  boolean isValidQueenMove(String source, String destination)
     {
         return (isVerticalMove(source, destination) || isHorizontalMove(source, destination) || isDiagonalMove(source, destination));
     }
+	
 	public  String getChessPiece(String gameEntry) {
     	
     	if(Character.isUpperCase(gameEntry.charAt(0))){
@@ -212,12 +230,14 @@ class Game
     	}
     	return "P";	
     }
-    public  String getPosition(String gameEntry) {
+    
+	public  String getPosition(String gameEntry) {
     	char[] positionToChar = gameEntry.toCharArray();
     	
-    	return ""+positionToChar[positionToChar.length - 2]+""+positionToChar[positionToChar.length - 1];
+    	return "" + positionToChar[positionToChar.length - 2] + "" + positionToChar[positionToChar.length - 1];
     }
-	public ArrayList<String> readInput() throws IOException{
+	
+    public ArrayList<String> readInput() throws IOException{
     	
     	ArrayList <String> input = new ArrayList<String>();
     	BufferedReader br = new BufferedReader(new FileReader("input.txt"));
@@ -229,8 +249,10 @@ class Game
     		input.add(moves[0]);
     		input.add(moves[1]);
     	}
+    	br.close();
     	return input;
     }
+	
     private String clean (String line)
     {
     	line = line.replaceAll("[!?\\+]", "");
