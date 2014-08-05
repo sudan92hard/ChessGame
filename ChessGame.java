@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -86,7 +85,10 @@ class Game
 	   
 	   
    }   
-	public  char getColorOfCell(String destination)
+	  
+	
+      
+    public  char getColorOfCell(String destination)
 	{
 		char color;
 		int calNum = destination.charAt(0)-'a' + 1;
@@ -96,24 +98,51 @@ class Game
 		else
 			color = 'w';
 		return color;
-	}   
+	}	
+	public  boolean isKill(String move)
+	{
+		if ((move.indexOf('x') == -1) && (move.indexOf('X') == -1))
+			return false;
+		return true;
+	}
 	
-    public  boolean isValidBishopMove(String source, String destination) {
-    	String files = "abcdefgh";
-    	Integer[] ranks = {0,1,2,3,4,5,6,7,8};
+	public  boolean isCheckMove(String move)
+	{
+		if ((move.indexOf('+') == -1))
+			return false;
+		return true;		
+		
+	}
+	
+	public  boolean isPromotion(String move)
+	{
+		if ((move.indexOf('=') == -1))
+			return false;
+		return true;		
+		
+	}
     
-    	
-    	int differenceInFiles = Math.abs(files.indexOf(source.charAt(0)) -  files.indexOf(destination.charAt(0)));
-    	int differenceInRanks = Math.abs((int)source.charAt(1) -  (int)destination.charAt(1));
-    	
-    	
-    	if(differenceInFiles == differenceInRanks){
-    		return true;
-    	}
-    	return false;
-    	
+    
+    
+    public  boolean isHorizontalMove(String source, String destination)
+    {   
+        return (source.charAt(1) == destination.charAt(1));
     }
-
+    
+    public  boolean isVerticalMove(String source, String destination)
+    {   
+        return (source.charAt(0) == destination.charAt(0));
+    }
+    
+    public  boolean isDiagonalMove(String source, String destination)
+    {   
+        return ((Math.abs(source.charAt(1) - destination.charAt(1))) == Math.abs((source.charAt(0) - destination.charAt(0))));
+    }
+    
+    public  boolean isValidPawnMove(String source, String destination)
+    {
+        return ((source.charAt(1) == '2' && destination.charAt(1) == '3') || (source.charAt(1) == '2' && destination.charAt(1) == '4') || (source.charAt(1) == '7' && destination.charAt(1) == '6') || (source.charAt(1) == '7' && destination.charAt(1) == '5'));
+    }
     
     public  boolean isValidKingMove(String source, String destination) {
     	String files = "abcdefgh";
@@ -136,22 +165,7 @@ class Game
     	return false;
     	
     }
-    public  String getChessPiece(String gameEntry) {
-    	
-    	if(Character.isUpperCase(gameEntry.charAt(0))){
-    		String chessPiece = "" + gameEntry.charAt(0); 
-    		return chessPiece;
-    	}
-    	return "P";
-    		
-    	
-    		
-    }
-    public  String getPosition(String gameEntry) {
-    	char[] positionToChar = gameEntry.toCharArray();
-    	
-    	return ""+positionToChar[positionToChar.length - 2]+""+positionToChar[positionToChar.length - 1];
-    }
+    
 	
 	public  boolean isValidRookMove(String source, String destination)
 	{
@@ -171,7 +185,38 @@ class Game
 		
 		return false;
 	}
-	
+	public  boolean isValidBishopMove(String source, String destination) {
+    	String files = "abcdefgh";
+    	Integer[] ranks = {0,1,2,3,4,5,6,7,8};
+    
+    	
+    	int differenceInFiles = Math.abs(files.indexOf(source.charAt(0)) -  files.indexOf(destination.charAt(0)));
+    	int differenceInRanks = Math.abs((int)source.charAt(1) -  (int)destination.charAt(1));
+    	
+    	
+    	if(differenceInFiles == differenceInRanks){
+    		return true;
+    	}
+    	return false;
+    	
+    }  
+	public  boolean isValidQueenMove(String source, String destination)
+    {
+        return (isVerticalMove(source, destination) || isHorizontalMove(source, destination) || isDiagonalMove(source, destination));
+    }
+	public  String getChessPiece(String gameEntry) {
+    	
+    	if(Character.isUpperCase(gameEntry.charAt(0))){
+    		String chessPiece = "" + gameEntry.charAt(0); 
+    		return chessPiece;
+    	}
+    	return "P";	
+    }
+    public  String getPosition(String gameEntry) {
+    	char[] positionToChar = gameEntry.toCharArray();
+    	
+    	return ""+positionToChar[positionToChar.length - 2]+""+positionToChar[positionToChar.length - 1];
+    }
 	public ArrayList<String> readInput() throws IOException{
     	
     	ArrayList <String> input = new ArrayList<String>();
