@@ -184,13 +184,14 @@ class Game
     }
     
 	
-	public  boolean isValidRookMove(String source, String destination)
+	public static boolean isValidRookMove(String source, String destination)
 	{
-		if((source.charAt(0) != destination.charAt(0)) && (source.charAt(1) != destination.charAt(1)) )
+		if((!isHorizontalMove(source, destination)) && ((!isVerticalalMove(source, destination)) )
 			return false;
-		
+
 		return true;
 	}
+
 	
 	public  boolean isValidKnightMove(String source, String destination)
 	{
