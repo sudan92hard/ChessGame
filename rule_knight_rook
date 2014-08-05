@@ -13,13 +13,6 @@ public class Rules {
 		return color;
 	}
 	
-	public static boolean isKill(String move)
-	{
-		if ((move.indexOf('x') == -1) && (move.indexOf('X') == -1))
-			return false;
-		return true;
-	}
-	
 	public static boolean isValidRookMove(String source, String destination)
 	{
 		if((source.charAt(0) != destination.charAt(0)) && (source.charAt(1) != destination.charAt(1)) )
@@ -39,13 +32,28 @@ public class Rules {
 		return false;
 	}
 	
-	//public static void main(String[] args)
-	//{
+	public static boolean isKill(String move)
+	{
+		if ((move.indexOf('x') == -1) && (move.indexOf('X') == -1))
+			return false;
+		return true;
+	}
+	
+	public static boolean isCheckMove(String move)
+	{
+		if ((move.indexOf('=') == -1))
+			return false;
+		return true;		
+		
+	}
+	
+	public static void main(String[] args)
+	{
 		//char color = getColorOfCell("b3");
 		//System.out.println(color);
 		
-		//boolean check = isValidKnightMove("c3","g3");
-		//System.out.println(check);
+		boolean check = isKill("xcx3");
+		System.out.println(check);
 		
-	//}
+	}
 }
