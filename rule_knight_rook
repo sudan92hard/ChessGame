@@ -1,0 +1,44 @@
+
+public class Rules {
+
+	public static char getColorOfCell(String destination)
+	{
+		char color;
+		int calNum = destination.charAt(0)-'a' + 1;
+		calNum = calNum + (int)destination.charAt(1);
+		if(calNum % 2 ==0)
+			color = 'b';
+		else
+			color = 'w';
+		return color;
+	}
+	
+	public static boolean isValidRookMove(String source, String destination)
+	{
+		if((source.charAt(0) != destination.charAt(0)) && (source.charAt(1) != destination.charAt(1)) )
+			return false;
+		
+		return true;
+	}
+	
+	public static boolean isValidKnightMove(String source, String destination)
+	{
+		if( ((source.charAt(0) == (destination.charAt(0) + 1)) || (source.charAt(0) == (destination.charAt(0) - 1))) && ( (source.charAt(1) == (destination.charAt(1) + 2)) || (source.charAt(1) == (destination.charAt(1) - 2))) )
+			return true;
+		
+		if( ((source.charAt(0) == (destination.charAt(0) + 2)) || (source.charAt(0) == (destination.charAt(0) - 2))) && ( (source.charAt(1) == (destination.charAt(1) + 1)) || (source.charAt(1) == (destination.charAt(1) - 1))) )
+			return true;
+		
+		return false;
+	}
+	
+	//public static void main(String[] args)
+	//{
+		//char color = getColorOfCell("b3");
+		//System.out.println(color);
+		
+		//boolean check = isValidKnightMove("c3","g3");
+		//System.out.println(check);
+		
+	//}
+}
