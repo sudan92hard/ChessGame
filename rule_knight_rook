@@ -13,6 +13,13 @@ public class Rules {
 		return color;
 	}
 	
+	public static boolean isKill(String move)
+	{
+		if ((move.indexOf('x') == -1) && (move.indexOf('X') == -1))
+			return false;
+		return true;
+	}
+	
 	public static boolean isValidRookMove(String source, String destination)
 	{
 		if((source.charAt(0) != destination.charAt(0)) && (source.charAt(1) != destination.charAt(1)) )
