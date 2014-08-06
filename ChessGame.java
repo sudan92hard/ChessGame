@@ -1,36 +1,23 @@
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
+package pngGame;
 
-
-
-
-
+import java.io.*;
+import java.util.*;
 
 public class ChessGame {
-	
+
     public static void main (String args[]) throws IOException{
     	Game game = new Game();
     	ArrayList <String> input = game.readInput();
     	System.out.println(game.cb);
-    	//game.isWhite("1234");
+    	game.checkNextMove(input);
+    	game.getRemainingPieces();
+    	System.out.println(game.cb);
+    	
+    
+    	
     }
-    /*public String getColor(String position){ }
-    public boolean isValidRookMove(String source, String destination) {}
-    public boolean isValidKnightMove(String source, String destination) {}
-    public boolean isValidBishopMove(String source, String destination) {}
-    public boolean isValidkingMove(String source, String destination) {}
-    public boolean isValidQueenMove(String source, String destination) {}
-    public boolean isValidPawnMove(String source, String destination) {}
-    public String getChessPiece(String gameEntry) {}
-    public String getPosition(String gameEntry) {}
-    public void kill(String str) {}
-    */
-    }
+}
+
 class Game
 {
 	public Map <String, String> cb;
@@ -44,7 +31,7 @@ class Game
 	   cb.put("f1", "Bw");
 	   cb.put("g1", "Nw");
 	   cb.put("h1", "Rw");
-	   
+
 	   cb.put("a2", "Pw");
 	   cb.put("b2", "Pw");
 	   cb.put("c2", "Pw");
@@ -53,7 +40,7 @@ class Game
 	   cb.put("f2", "Pw");
 	   cb.put("g2", "Pw");
 	   cb.put("h2", "Pw");
-	   
+
 	   cb.put("a8", "Rb");
 	   cb.put("b8", "Nb");
 	   cb.put("c8", "Bb");
@@ -62,7 +49,7 @@ class Game
 	   cb.put("f8", "Bb");
 	   cb.put("g8", "Nb");
 	   cb.put("h8", "Rb");
-	   
+
 	   cb.put("a7", "Pb");
 	   cb.put("b7", "Pb");
 	   cb.put("c7", "Pb");
@@ -71,8 +58,8 @@ class Game
 	   cb.put("f7", "Pb");
 	   cb.put("g7", "Pb");
 	   cb.put("h7", "Pb");
-	   
-	   
+
+
 	   for(int i = 3; i <= 6; i++)
 	   {
 		   char pos = 'a';
@@ -84,8 +71,8 @@ class Game
 		   }
 	   }
    }   
-	  
-	
+
+
     public boolean isWhite(String str)
     {
     	if(cb.get(str).charAt(1) == 'w')
@@ -95,6 +82,7 @@ class Game
     	
     	return false;
     }
+
     public boolean isBlack(String str)
     {
     	if(cb.get(str).charAt(1) == 'b')
@@ -115,31 +103,30 @@ class Game
 		else
 			color = 'w';
 		return color;
-	}	
+	}
+    
 	public  boolean isKill(String move)
 	{
 		if ((move.indexOf('x') == -1) && (move.indexOf('X') == -1))
 			return false;
 		return true;
 	}
-	
+
 	public  boolean isCheckMove(String move)
 	{
 		if ((move.indexOf('+') == -1))
 			return false;
 		return true;		
-		
+
 	}
-	
+
 	public  boolean isPromotion(String move)
 	{
 		if ((move.indexOf('=') == -1))
 			return false;
 		return true;		
-		
+
 	}
-    
-    
     
     public  boolean isHorizontalMove(String source, String destination)
     {   
@@ -158,7 +145,8 @@ class Game
     
     public  boolean isValidPawnMove(String source, String destination)
     {
-        return ((source.charAt(1) == '2' && destination.charAt(1) == '3') || (source.charAt(1) == '2' && destination.charAt(1) == '4') || (source.charAt(1) == '7' && destination.charAt(1) == '6') || (source.charAt(1) == '7' && destination.charAt(1) == '5'));
+     
+    	return ((source.charAt(1) == '2' && destination.charAt(1) == '3') || (source.charAt(1) == '2' && destination.charAt(1) == '4') || (source.charAt(1) == '7' && destination.charAt(1) == '6') || (source.charAt(1) == '7' && destination.charAt(1) == '5'));
     }
     
     public  boolean isValidKingMove(String source, String destination) {
@@ -183,30 +171,29 @@ class Game
     	
     }
     
-	
-	public static boolean isValidRookMove(String source, String destination)
+
+	public boolean isValidRookMove(String source, String destination)
 	{
-		if((!isHorizontalMove(source, destination)) && ((!isVerticalalMove(source, destination)) )
+		if((!isHorizontalMove(source, destination)) && (!isVerticalMove(source, destination)) )
 			return false;
 
 		return true;
 	}
 
-	
+
 	public  boolean isValidKnightMove(String source, String destination)
 	{
 		if( ((source.charAt(0) == (destination.charAt(0) + 1)) || (source.charAt(0) == (destination.charAt(0) - 1))) && ( (source.charAt(1) == (destination.charAt(1) + 2)) || (source.charAt(1) == (destination.charAt(1) - 2))) )
 			return true;
-		
+
 		if( ((source.charAt(0) == (destination.charAt(0) + 2)) || (source.charAt(0) == (destination.charAt(0) - 2))) && ( (source.charAt(1) == (destination.charAt(1) + 1)) || (source.charAt(1) == (destination.charAt(1) - 1))) )
 			return true;
-		
+
 		return false;
 	}
-	
+
 	public  boolean isValidBishopMove(String source, String destination) {
     	String files = "abcdefgh";
-    	//Integer[] ranks = {0,1,2,3,4,5,6,7,8};
     	int differenceInFiles = Math.abs(files.indexOf(source.charAt(0)) -  files.indexOf(destination.charAt(0)));
     	int differenceInRanks = Math.abs((int)source.charAt(1) -  (int)destination.charAt(1));
     	
@@ -217,12 +204,12 @@ class Game
     	return false;
     	
     }  
-	
+
 	public  boolean isValidQueenMove(String source, String destination)
     {
         return (isVerticalMove(source, destination) || isHorizontalMove(source, destination) || isDiagonalMove(source, destination));
     }
-	
+
 	public  String getChessPiece(String gameEntry) {
     	
     	if(Character.isUpperCase(gameEntry.charAt(0))){
@@ -237,11 +224,11 @@ class Game
     	
     	return "" + positionToChar[positionToChar.length - 2] + "" + positionToChar[positionToChar.length - 1];
     }
-	
+
     public ArrayList<String> readInput() throws IOException{
     	
     	ArrayList <String> input = new ArrayList<String>();
-    	BufferedReader br = new BufferedReader(new FileReader("input.txt"));
+    	BufferedReader br = new BufferedReader(new FileReader("pngInput.txt"));
     	String line;
     	while((line = br.readLine()) != null)
     	{
@@ -251,12 +238,125 @@ class Game
     		input.add(moves[1]);
     	}
     	br.close();
+    	System.out.println("Result of Game: "+input.get(input.size() -1));
+    	input.remove(input.size() -1 );
     	return input;
     }
-	
+
     private String clean (String line)
     {
     	line = line.replaceAll("[!?\\+]", "");
     	return line;
+    }
+    
+    public ArrayList<String> integrateChange(String input, Integer index)
+    {
+		String[] pieceName = { "K", "Q", "R", "N", "B", "P" };
+		ArrayList<String> possibleSource = new ArrayList<String>();
+		String piece = getChessPiece(input);
+		Set keySet = cb.keySet();
+		Iterator<String> iter = keySet.iterator();
+
+		if (index % 2 == 0) {
+
+			while (iter.hasNext()) {
+				String position = iter.next();
+				if (cb.get(position)!= null && cb.get(position).contains(piece + "w")) {
+					possibleSource.add(position);
+				}
+			}
+
+		} else {
+			while (iter.hasNext()) {
+				String position = iter.next();
+				if (cb.get(position) != null && cb.get(position).contains(piece + "b")) {
+					possibleSource.add(position);
+				}
+			}
+
+		}
+
+		return possibleSource;
+	}
+    
+    public void checkNextMove (ArrayList <String> input)
+    {
+    	for(String move : input){
+    		ArrayList<String> possibleMoves = integrateChange(move , input.indexOf(move));
+    		String piece = getChessPiece(move);
+    		String position = getPosition(move);
+    		
+    			
+    			if(piece.equals("R")){
+    				for (int i =0; i < possibleMoves.size(); i++){
+    					if(isValidRookMove(possibleMoves.get(i), position)){
+    						updateHashMap(possibleMoves.get(i), position);
+    						
+    					}
+    				}
+    			}else if (piece.equals("K")){
+    				for (int i =0; i < possibleMoves.size(); i++){
+    					if(isValidKingMove(possibleMoves.get(i), position)){
+    						updateHashMap(possibleMoves.get(i), position);
+    					}
+    				}
+    				
+    			} else if(piece.equals("Q")){
+    				for (int i =0; i < possibleMoves.size(); i++){
+    					if(isValidQueenMove(possibleMoves.get(i), position)){
+    						updateHashMap(possibleMoves.get(i), position);
+    					}
+    				}
+    		} else if(piece.equals("B")){
+    			for (int i =0; i < possibleMoves.size(); i++){
+    				if(isValidBishopMove(possibleMoves.get(i), position)){
+    					updateHashMap(possibleMoves.get(i), position);
+    				}
+    			}
+    		} else if(piece.equals("N")){
+    			for (int i =0; i < possibleMoves.size(); i++){
+					if(isValidKnightMove(possibleMoves.get(i), position)){
+						updateHashMap(possibleMoves.get(i), position);
+					}
+				}
+    		} else if (piece.equals("P")){
+    			for (int i =0; i < possibleMoves.size(); i++){
+    				if(isValidPawnMove(possibleMoves.get(i), position)){
+						updateHashMap(possibleMoves.get(i), position);
+					}
+				}
+    		}
+    	}
+    	
+    }
+    
+    public void updateHashMap(String source, String destination){
+    	
+    	String value = cb.get(source);
+    	cb.put(source, null);
+    	cb.put(destination, value);
+    }
+    
+    public void getRemainingPieces(){
+    	
+    	Set keySet = cb.keySet();
+		Iterator<String> iter = keySet.iterator();
+		String[] piecesName = {"Bishop","King","Queen","Rook","Knight","Pawn"};
+		while (iter.hasNext()){
+			String position = iter.next();
+			if (cb.get(position) != null){
+				
+					for(String i:piecesName){
+						if(i.startsWith(String.valueOf(cb.get(position).charAt(0)))){
+							if(cb.get(position).contains("w")){
+								System.out.println(i +" of white");
+						}
+							else
+								System.out.println(i +" of black");
+					}
+				}
+			}
+		}
+    	
     }
 }
