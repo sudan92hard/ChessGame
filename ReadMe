@@ -1,0 +1,9 @@
+Input file format  : <white move> <black move>
+  It is read into ArrayList with even indices as white moves and odd indices as black moves
+  
+Not handled special cases like castling, promotion, en passante
+
+column check is also required in isPossiblePawnMove()
+
+out put is what coins are present in chessboard
+Their coordinates have to be printed
