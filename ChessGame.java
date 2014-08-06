@@ -1,4 +1,4 @@
-package pngGame;
+
 
 import java.io.*;
 import java.util.*;
@@ -143,13 +143,13 @@ class Game
         return ((Math.abs(source.charAt(1) - destination.charAt(1))) == Math.abs((source.charAt(0) - destination.charAt(0))));
     }
     
-    public  boolean isValidPawnMove(String source, String destination)
+    public  boolean isPossiblePawnMove(String source, String destination)
     {
      
     	return ((source.charAt(1) == '2' && destination.charAt(1) == '3') || (source.charAt(1) == '2' && destination.charAt(1) == '4') || (source.charAt(1) == '7' && destination.charAt(1) == '6') || (source.charAt(1) == '7' && destination.charAt(1) == '5'));
     }
     
-    public  boolean isValidKingMove(String source, String destination) {
+    public  boolean isPossibleKingMove(String source, String destination) {
     	String files = "abcdefgh";
     	
     	
@@ -172,7 +172,7 @@ class Game
     }
     
 
-	public boolean isValidRookMove(String source, String destination)
+	public boolean isPossibleRookMove(String source, String destination)
 	{
 		if((!isHorizontalMove(source, destination)) && (!isVerticalMove(source, destination)) )
 			return false;
@@ -181,7 +181,7 @@ class Game
 	}
 
 
-	public  boolean isValidKnightMove(String source, String destination)
+	public  boolean isPossibleKnightMove(String source, String destination)
 	{
 		if( ((source.charAt(0) == (destination.charAt(0) + 1)) || (source.charAt(0) == (destination.charAt(0) - 1))) && ( (source.charAt(1) == (destination.charAt(1) + 2)) || (source.charAt(1) == (destination.charAt(1) - 2))) )
 			return true;
@@ -192,7 +192,7 @@ class Game
 		return false;
 	}
 
-	public  boolean isValidBishopMove(String source, String destination) {
+	public  boolean isPossibleBishopMove(String source, String destination) {
     	String files = "abcdefgh";
     	int differenceInFiles = Math.abs(files.indexOf(source.charAt(0)) -  files.indexOf(destination.charAt(0)));
     	int differenceInRanks = Math.abs((int)source.charAt(1) -  (int)destination.charAt(1));
@@ -205,7 +205,7 @@ class Game
     	
     }  
 
-	public  boolean isValidQueenMove(String source, String destination)
+	public  boolean isPossibleQueenMove(String source, String destination)
     {
         return (isVerticalMove(source, destination) || isHorizontalMove(source, destination) || isDiagonalMove(source, destination));
     }
@@ -249,7 +249,7 @@ class Game
     	return line;
     }
     
-    public ArrayList<String> integrateChange(String input, Integer index)
+    public ArrayList<String> getPossibleSources(String input, Integer index)
     {
 		String[] pieceName = { "K", "Q", "R", "N", "B", "P" };
 		ArrayList<String> possibleSource = new ArrayList<String>();
@@ -282,46 +282,46 @@ class Game
     public void checkNextMove (ArrayList <String> input)
     {
     	for(String move : input){
-    		ArrayList<String> possibleMoves = integrateChange(move , input.indexOf(move));
+    		ArrayList<String> possibleMoves = getPossibleSources(move , input.indexOf(move));
     		String piece = getChessPiece(move);
     		String position = getPosition(move);
     		
     			
     			if(piece.equals("R")){
     				for (int i =0; i < possibleMoves.size(); i++){
-    					if(isValidRookMove(possibleMoves.get(i), position)){
+    					if(isPossibleRookMove(possibleMoves.get(i), position)){
     						updateHashMap(possibleMoves.get(i), position);
     						
     					}
     				}
     			}else if (piece.equals("K")){
     				for (int i =0; i < possibleMoves.size(); i++){
-    					if(isValidKingMove(possibleMoves.get(i), position)){
+    					if(isPossibleKingMove(possibleMoves.get(i), position)){
     						updateHashMap(possibleMoves.get(i), position);
     					}
     				}
     				
     			} else if(piece.equals("Q")){
     				for (int i =0; i < possibleMoves.size(); i++){
-    					if(isValidQueenMove(possibleMoves.get(i), position)){
+    					if(isPossibleQueenMove(possibleMoves.get(i), position)){
     						updateHashMap(possibleMoves.get(i), position);
     					}
     				}
     		} else if(piece.equals("B")){
     			for (int i =0; i < possibleMoves.size(); i++){
-    				if(isValidBishopMove(possibleMoves.get(i), position)){
+    				if(isPossibleBishopMove(possibleMoves.get(i), position)){
     					updateHashMap(possibleMoves.get(i), position);
     				}
     			}
     		} else if(piece.equals("N")){
     			for (int i =0; i < possibleMoves.size(); i++){
-					if(isValidKnightMove(possibleMoves.get(i), position)){
+					if(isPossibleKnightMove(possibleMoves.get(i), position)){
 						updateHashMap(possibleMoves.get(i), position);
 					}
 				}
     		} else if (piece.equals("P")){
     			for (int i =0; i < possibleMoves.size(); i++){
-    				if(isValidPawnMove(possibleMoves.get(i), position)){
+    				if(isPossiblePawnMove(possibleMoves.get(i), position)){
 						updateHashMap(possibleMoves.get(i), position);
 					}
 				}
