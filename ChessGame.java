@@ -143,7 +143,7 @@ class Game
         return ((Math.abs(source.charAt(1) - destination.charAt(1))) == Math.abs((source.charAt(0) - destination.charAt(0))));
     }
     
-    public  boolean isPossiblePawnMove(String source, String destination)
+    public  boolean isPossiblePawnMove(String source, String destination)//need to check for column , and the cross condition where it kills
     {
      
     	return ((source.charAt(1) == '2' && destination.charAt(1) == '3') || (source.charAt(1) == '2' && destination.charAt(1) == '4') || (source.charAt(1) == '7' && destination.charAt(1) == '6') || (source.charAt(1) == '7' && destination.charAt(1) == '5'));
